@@ -5,7 +5,7 @@ def is_palindrome(s):
     str_length = len(s)
 
     for i in range(str_length / 2):
-        if s[i] != s[-i]:
+        if s[i] != s[str_length - 1 - i]:
             return False
 
     return True
@@ -21,11 +21,14 @@ def change(s):
 
 # 暴力求解法
 def algorithm1(s):
-    # 获取所有的子串
+    length = len(s)
 
-    sub_list = []
+    for i in range(length):
+        for j in range(i + 1):
+            if is_palindrome(s[j: length - i + j]):
+                return len(s[j: length - i + j])
 
-    pass
+    return 1
 
 
 # 动态规划法
@@ -35,7 +38,17 @@ def algorithm2(s):
 
 # 中心求解法
 def algorithm3(s):
-    pass
+    s = change(s)
+    flag = 0
+    for i in range(2, len(s) - 2):
+        temp = 1
+        while s[i - temp] == s[i + temp]:
+            temp += 1
+
+        if temp > flag:
+            flag = temp
+
+    return flag - 1
 
 
 # Manacher算法
@@ -62,3 +75,5 @@ if __name__ == "__main__":
     s1 = "abbac"
     print s1
     print algorithm4(s1)
+    print algorithm3(s1)
+    print algorithm1(s1)
