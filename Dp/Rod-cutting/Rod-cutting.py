@@ -29,5 +29,20 @@ def cut(table, l):
     return q
 
 
-print cut(dic, 15)
-print count
+def cut_dp(table, l):
+    r = [0] * (l + 1)
+    for i in range(1, l + 1):
+        q = 0
+        for j in table.keys():
+            q = max(q, table[j] + r[i - j])
+
+        r[i] = q
+
+    return r[l]
+
+
+if __name__ == "__main__":
+    print cut(dic, 15)
+    print count
+
+    print cut_dp(dic, 15)
